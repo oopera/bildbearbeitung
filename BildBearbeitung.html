@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	<link rel="stylesheet" href="css.css">
+	<meta name="viewport" content="width=device-width, inital-scale=1.0">
+		<script src="js.js"></script>
+	</head>
+<body>
+	<div class="name">LUCASLICHNER</div>
+<div id="sitecontainer">	
+	
+	
+	<!-- Button Leiste links -->	
+	<div id="controlcontainer">
+	
+		<!-- Grauwert -->
+		<div class="button1"><button class="button" onclick="Grauwertbild()">Grauwertbild</button>
+			<div class="tooltip1"><h1>?&nbsp;</h1><span class="tooltiphelp"> Umwandlung des Bildes in ein Grauwertbild</span></div>
+		</div>
+	
+		<!-- SchwarzWeiß -->	
+		<div class="button1"><button class="button" onclick="SWBild()">SW Bild</button><div class="tooltip1"><h1>?&nbsp;</h1>
+			<span class="tooltiphelp"> Umwandlung des Bildes in ein SW Bild mit einstellbarem Schwellwert</span></div><h1>Schwellwert: </h1><input type="number" id="420" value="125"> 
+		</div>
+	
+		<!-- Helligkeit -->	
+		<div class="button1"><button class="button" onclick="Helligkeit()">Helligkeit</button><div class="tooltip1"><h1>?&nbsp;</h1><span class="tooltiphelp"> Veränderung der 	Helligkeit des Bildes - Werte 1> Dimmen, während Werte >1 aufhellen </span></div><h1>Faktor:</h1><input type="number" id="421" value="1" step="0.1">
+		</div>
+	
+		<!-- Kontrast -->	
+		<div class="button1"><button class="button" onclick="Kontrast()">Kontrast</button><div class="tooltip1"><h1>?&nbsp; </h1><span class="tooltiphelp"> Veränderung des 		Kontrastes des Bildes. Werte 0> Verringern den Kontrast, während Werte >1 den Kontrast erhöhen</span></div><h1>Faktor:</h1><input type="number" id="422" 		value="1">
+		</div>
+	
+		<!-- RGB Wert ändern -->	
+		<div class="button1"><button class="button" onclick="RGB()">RGB</button>
+			<div class="tooltip1"><h1>?</h1><span class="tooltiphelp"> Dynamische Einstellung der R/G/B Werte</span></div>
+       	   R<input type="number" id="423" value="1" step="0.1">
+      	   G<input type="number" id="424" value="1" step="0.1" >
+       	   B<input type="number" id="425" value="1" step="0.1">
+		</div>
+	
+		<!--Negativ-->
+		<div class="button1"><button class="button" onclick="Negativ()">Negativ</button>
+			<div class="tooltip1"><h1>?</h1><span class="tooltiphelp"> Umwandlung des Bildes in ein Negativ </span></div>
+		</div>
+		
+		<!-- Rotation -->
+		<div class="button1">
+			<button class="button" onclick="RotationU()">RotationU</button>
+			<div class="tooltip1"><h1>?</h1><span class="tooltiphelp"> Rotation des Bildes um 90 Grad im oder gegen den Uhrzeigersinn</span></div>
+			<button class="button" onclick="RotationGGU()">RotationGGU</button>
+		</div>
+		
+		<!-- Spiegeln --> 
+		<div class="button1">
+			<button class="button" onclick="SpiegelungHor()">SpiegelungHor</button>
+			<div class="tooltip1"><h1>?</h1><span class="tooltiphelp">Horizontale sowie Vertikale Spiegelung</span></div>
+			<button class="button" onclick="SpiegelungVer()">SpiegelungVer</button>
+		</div>
+		
+		<!-- Skalierung -->
+		<div class="button1">
+			<button class="button" onclick="SkalierungH()">SkalierungH</button>
+			<div class="tooltip1"><h1>?</h1><span class="tooltiphelp"> Skalierung Hoch oder Runter mit dem Faktor 2 oder 0.5</span></div>	
+			<button class="button" onclick="SkalierungR()">SkalierungR</button>
+		</div>
+		
+		<!-- Rauschfilter -->  
+		<div class="button1"><button class="button" onclick="Rauschfilter()">Rauschfilter</button>
+			<div class="tooltip1"><h1>?</h1><span class="tooltiphelp">Applikation eines Rauschfilters/Weichzeichners</span></div>	
+		</div>
+		
+		<!-- Gaußfilter -->
+		<div class="button1">
+			<button class="button" onclick="gaussFilterDreiDrei()">GaussFilter3x3</button>
+			<div class="tooltip1"><h1>?</h1><span class="tooltiphelp">Applikation einer Gaussischen Unschärfe um in einem 3x3 Pixel oder 5x5 Pixel Radius</span></div>	
+			<button class="button" onclick="gaussFilterFuenfFuenf()">GaussFilter5x5</button>
+		</div>
+		
+		<!-- Kantenerkennung -->
+		<div class="button1"><button class="button" onclick="Kantenerkennung()">Kantenerkennung</button>
+			<div class="tooltip1"><h1>?</h1><span class="tooltiphelp"> Eine Einfache Kantenerkennung</span></div>		
+		</div>
+		
+		<!-- Histogram -->
+		<div class="button1"><button class="button" onclick="FarbHistogram()">Farbhistogramm</button>
+			<div class="tooltip1"><h1>?</h1><span class="tooltiphelp"> Erstellen eines Farbhistograms unter dem Bild</span></div>	
+		</div>
+		
+		<!-- Zurücksetzen -->
+		<div class="button1"><button class="button" onclick="Zuruecksetzen()">Zuruecksetzen</button>
+			<div class="tooltip1"><h1>?</h1><span class="tooltiphelp"> Zurücksetzen des Bildes auf die Ausgangsdarstellung</span></div>	
+		</div>
+		
+		<!--Download-->
+		<div class="button1"><button class="button" onclick="download()">Herunterladen</button>
+			<div class="tooltip1"><h1>?</h1><span class="tooltiphelp"> Herunterladen des dargestellten Bildes</span></div>	
+		</div>
+	
+	</div>
+
+	<div id="toggleButton" onclick="hide()"></div>
+
+	<div class="uploadContainer">
+	<input type="file" id="imageLoader" name="imageLoader"/>
+	</div>
+	<canvas id="myCanvas"/>
+
+	</div>
+</body>
+</html>
+
