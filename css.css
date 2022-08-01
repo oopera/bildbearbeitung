@@ -17,7 +17,28 @@ body{
 	position: absolute;
 	
 }
+@media only screen and (min-width: 999px){
+#disclaimer{
+	display: none;
+}
+}
+@media only screen and (max-width: 999px){
+#disclaimer{
+	display: flex;
+}
+	
+}
 
+#disclaimer{
+
+	padding: 50px;
+	width: 100vw;
+	height: 100vh;
+	z-index: 1000;
+	background-color: black;
+	color: white;
+	padding-right: 20px;
+}
 #root{
 	position: fixed; 
 	height: 100vh;
@@ -120,7 +141,7 @@ body{
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	font-size: 10em;
+	font-size: 10vw;
 	overflow: hidden;
 	color: white;
 	visibility: hidden;
