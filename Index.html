@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	<link rel="stylesheet" href="css.css">
+	<meta name="viewport" content="width=device-width, inital-scale=1.0">
+		<script src="js.js"></script>
+		<script src="globe.js"></script>
+		<script src="https://www.webglearth.com/v2/api.js"></script>
+	</head>
+
+<body >
+	<div onload="initialize()"/>
+	<div id='mouseTing'></div>
+	<div class="name">LUCASLICHNER</div>
+<div id="loader"></div>
+<div id="sitecontainer">	
+	<!-- Button Leiste links -->	
+
+	<div id="controlcontainer">
+	
+		<!-- Grauwert -->
+		<div class="button1"><button class="button" onclick="Grauwertbild()">Greyscale</button>
+				</div>
+	
+		<!-- SchwarzWeiß -->	
+		<div class="button1"><button class="button" onclick="SWBild()">Black & White</button>
+				</div>
+	
+		<!-- Helligkeit -->	
+		<div class="button1"><button class="button" onclick="Helligkeit()">Brightness</button>
+		</div>
+	
+		<!-- Kontrast -->	
+		<div class="button1"><button class="button" onclick="Kontrast()">Contrast</button>
+				</div>
+	
+		<!-- RGB Wert ändern -->	
+		<div class="button1"><button class="button" onclick="RGB()">RGB</button>
+			</div>
+	
+		<!--Negativ-->
+		<div class="button1"><button class="button" onclick="Negativ()">Negative</button>
+				</div>
+		
+		<!-- Rotation -->
+		<div class="doubleButton">
+			<button class="halfbutton" onclick="RotationU()">Rotation CW</button>
+			<button class="halfbutton" onclick="RotationGGU()">Rotation CCW</button>
+		</div>
+		
+		<!-- Spiegeln --> 
+		<div class="doubleButton">
+			<button class="halfbutton" onclick="SpiegelungHor()">Mirror Hor</button>
+			<button class="halfbutton" onclick="SpiegelungVer()">Mirror Ver</button>
+		</div>
+		
+		<!-- Skalierung -->
+		<div class="doubleButton">
+			<button class="halfbutton" onclick="SkalierungH()">Scale Up</button>
+			<button class="halfbutton" onclick="SkalierungR()">Scale Down</button>
+		</div>
+		
+		<!-- Rauschfilter -->  
+		<div class="button1"><button class="button" onclick="Rauschfilter()">Noisefilter</button>
+	
+		</div>
+		
+		<!-- Gaußfilter -->
+		<div class="doubleButton">
+			<button class="halfbutton" onclick="gaussFilterDreiDrei()">Gauss 3x3</button>
+			<button class="halfbutton" onclick="gaussFilterFuenfFuenf()">Gauss 5x5</button>
+		</div>
+		
+		<!-- Kantenerkennung -->
+		<div class="button1"><button class="button" onclick="Kantenerkennung()">Edge Detection</button>
+				</div>
+		
+		<!-- Histogram -->
+		<div class="button1"><button class="button" onclick="FarbHistogram()">Color Histogram</button>
+			</div>
+		
+		<!-- Zurücksetzen -->
+		<div class="button1"><button class="button" onclick="Zuruecksetzen()">Reset</button>
+				</div>
+		
+		<!--Download-->
+		<div class="button1"><button class="button" onclick="download()">Download</button>
+
+		</div>
+
+		<div id='fileBorder'>
+			<label for="imageLoader" id="loadLabel">Upload</label>
+			<input type="file" id="imageLoader"/>
+		</div>
+
+	</div>
+
+	<div id="toggleButton" onclick="hide()">
+		<div class='arrowleft' id="arrow"></div>
+	</div>
+
+	<canvas id="myCanvas"/>
+
+
+
+	</div>
+	<img src="rei.png" id="reio" />
+	<img src="asuka.webp" id="asuka" />
+	<div id="globecontainer"></div>
+	<script src="globe.js"></script>
+</body>
+</html>
+

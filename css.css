@@ -1,9 +1,13 @@
 
 @font-face {
 	font-family: "Hustlebright";
-	src: url('/Hustle\ Bright.ttf');
+	src: url('HustleBright.ttf');
   }
 
+  @font-face {
+	font-family: "Aubrey";
+	src: url('Aubrey.ttf');
+  }
 
 body{
 	background-color: white;
@@ -11,9 +15,22 @@ body{
 	min-width: 100vw;
 	overflow: hidden;
 	position: absolute;
-
 }
 
+#reio{
+	position: absolute;
+	top:200px;
+	z-index: 1;
+	width: 350px;
+}
+
+#asuka{
+	position: absolute;
+	top:200px;
+	left:200px;
+	z-index: 0;
+	width: 450px;
+}
 
 #histoCan{
 	width:255px;
@@ -22,9 +39,156 @@ body{
 	margin-left:150px;
 }
 
-.fileContainer{
+#otherContainer{
+	display: flex;
+	flex-direction: column;
+}
+/*Container*/
+#sitecontainer{
+	height: 92vh;
+	width: 92vw;
+	overflow: hidden;
+	background-image: radial-gradient(
+		rgb(255, 255, 255) 2px, 
+		transparent 8%
+	  );
+	  background-position-x: 0%;
+	  background-position-y: 0%;
+	  background-size: 5vmin 5vmin;
+	margin-top: 20px;
+	margin-left: 100px;
+	background-color: black;
+	padding: 20px;
+	display: flex;
+	flex-direction: row;
+}
+
+#toggleButton{
+	margin-top: 8px;
+	width: 75px;
+	height: 875px;
+	background-color: black;
+	justify-content: center;
+	display: flex;
+	align-items: center;
+	border: 2pt dotted grey;
+	z-index: 5;
+}
+
+#toggleButton:hover{
+	border: 2pt dotted white;
+}
+
+#mouseTing{
+	width: 20px;
+	height: 20px;
+	border-radius: 20px;
+	background-color: black;
+	position: fixed;
+	border: 1pt white solid;
+	z-index: 100;
+	pointer-events: none;
+	transition: opacity 500ms ease;
+	display: grid;
+	place-items: center;
+}
+
+#controlcontainer{
+	height: fit-content;
+	justify-content: space-between;
+	z-index: 2;
+	width: 225px;
+	flex-direction: column;
+}
+
+#loader{
+	background-color: black;
+	position: absolute;
+	z-index: 10000;
+	animation: loading 2s cubic-bezier(0.075, 0.82, 0.165, 1) ;
+	margin: 0;
+}
+
+@keyframes loading{
+	0%{ 
+		width: 0px;
+		height: 0px;
+		top: 0;
+		left: 0;
+	}
+	25%{ 
+		width: 100vw;
+		height: 100vh;
+		top: 0;
+		left: 0;
+	}
+
+	100%{ 
+		width: 0px;
+		height: 0px;
+		top:100vh;
+		left: 100vw;
+	}
+
+}
+
+.arrow{
+	border-bottom: white solid 2pt;
+	border-left: white solid 2pt;
+	transform: rotate(-135deg);
+	width: 15px;
+	height: 15px;
+}
+
+.arrowleft{
+	border-bottom: white solid 2pt;
+	border-left: white solid 2pt;
+	transform: rotate(45deg);
+	width: 15px;
+	height: 15px;
+}
+input[type="file"] {
+    display: none;
+}
+
+#myCanvas{
+	margin-left: 50px;
+	pointer-events: none;
+}
+#loadLabel{
+	border: 1px dotted grey;
+    padding: 12px 24px;
+    cursor: pointer;
+	color: white;
+
+}
+
+#loadLabel:hover{
+	border: 1px dotted white;
+}
+
+#fileBorder{
 	background-color: white;
-	color: black;
+	padding: 5px;
+	width: 190px;
+	align-items: center;
+	display: flex;
+	height: 100px;
+	justify-content: center;
+	border: 2pt gray solid;
+	background-color: black;
+}
+
+#fileBorder:hover{
+	border: 2pt white solid;
+}
+
+#globecontainer{
+	padding-right: 75%;
+	z-index: 19;
+	position: fixed;
+	height: 1200px;
+	overflow: show;
 }
 
 .name{
@@ -32,116 +196,68 @@ body{
 	position: absolute;
 	float: left;
 	transform: rotate(90deg);
-	font-size: 7em;
+	font-size: 5em;
+	margin-top: 20px;
 	width: 100px;
 
 }
 
-/*Container*/
-#sitecontainer{
-	height: 94vh;
-	width: 94vw;
-	overflow: hidden;
-	background-image: radial-gradient(
-		rgba(255, 255, 255, 0.2) 8%, 
-		transparent 8%
-	  );
-	  background-position: 0% 0%;
-	  background-size: 5vmin 5vmin;
+
+.doubleButton{
 	display: flex;
 	flex-direction: row;
-	margin-top: 20px;
-	margin-left: 100px;
+}
+
+
+.halfbutton{
+	width: 98px;
+	max-height : 45px;
 	background-color: black;
-	padding: 20px;
-}
-
-#Header-Container {
-	position: relative;
-	background-color: white;
-	max-width: 420px;
-	min-width: 420px;
-	max-height: 50px;
-	grid-column: 1/2;
-	border: black solid 5px;
-	font-size: 50%;
-	text-align: center;
-	border-radius: 10px;
-  }
-
-#toggleButton{
-	width: 50px;
-	height: 50px;
-	border-radius: 25px;
-	background-color: white;
-	z-index: 10;
-}
-
-#controlcontainer{
-	max-height:600px;
-	width: 450px;
-
+	color: white;
+	border: 2pt grey solid;
+	border-radius: 5px;
+	padding: 8px 4px;
+	margin: 4px 2px;
 	
 }
 
-#myCanvas{
-
-
-}
-
-
-#imageLoader{
-	height: fit-content;
-	width: fit-content;
-	border: 1pt solid white;
-	background-color: black;
-}
-
-
 .hidden{
-	visibility: hidden;
+	display: none;
 }
 
 /*Buttons*/
 .button1 {
 	min-height:45px;
 	border-radius: 5px;
-	border: 1pt white solid;
 	max-height : 45px;
-	background-color: black;
 	max-width: 420px;
 	min-width: 420px;
 	display: inline-block;
   	text-align: center;
   	font-size: 16px;
   	margin: 2px 2px;
-	
 }
 
-.button3 {
-  border-radius: 5px;
-  background-color: white;
-  padding: 8px 32px;
-	display: inline-block;
-  text-align: center;
-  font-size: 10px;
-
-}
 
 .button:hover{
-	background-color: lightgray;
+	border: 2pt solid white;
+}
+.halfbutton:hover{
+	border: 2pt solid white;
 }
 
 .button {
-min-width:200px;
+  min-width:200px;
   border-radius: 5px;
-  background-color: white;
+  background-color: black;
+  color: white;
+  border: 2pt grey solid;
   padding: 8px 32px;
-	display: inline-block;
+  display: inline-block;
   text-align: center;
   font-size: 16px;
   margin: 4px 2px;
-	float:left;
+  float:left;
 }
 
 input{
@@ -149,21 +265,16 @@ input{
 	max-height: 10px;
 	border-radius:25px;
 	width: 40px;
-	
 }
-
 
 .number1{
 	float: right;
 }
 
-
-
 /*Textformat*/ 
 h1 {
 	margin-top: 15px;
 	font-size: 15px;
-	position: relative;
 	float: left;
 
 	font-family: Cambria, "Hoefler Text", "Liberation Serif", Times, "Times New Roman", "serif";
@@ -197,32 +308,3 @@ p{
 .tooltip1:hover .tooltiphelp {
   visibility: visible;
 }
-
-
-.upload-container {
-	position: relative;
-  }
-  .upload-container input {
-	border: 1px solid #92b0b3;
-	background: #f1f1f1;
-	outline: 2px dashed #92b0b3;
-	outline-offset: -10px;
-	padding: 100px 0px 100px 250px;
-	text-align: center !important;
-	width: 500px;
-  }
-  .upload-container input:hover {
-	background: #ddd;
-  }
-  .upload-container:before {
-	position: absolute;
-	bottom: 50px;
-	left: 245px;
-	content: " (or) Drag and Drop files here. ";
-	color: #3f8188;
-	font-weight: 900;
-  }
-  .upload-btn {
-	margin-left: 300px;
-	padding: 7px 20px;
-  }

@@ -1,44 +1,80 @@
 // Bild in Canvas laden
-
 window.onload=function(){
-    var imageLoader = document.getElementById('imageLoader');
-    imageLoader.addEventListener('change', handleImage, false);
+    const fileBorder = document.getElementById('fileBorder');
+    const loadLabel = document.getElementById('loadLabel');
+    fileBorder.addEventListener('click', handleImage, false);
+    loadLabel.addEventListener('change', handleImage, false);
+    const el = document.querySelector("#sitecontainer");
+    const body = document.querySelector('body')
+    initialize();
 
+    body.addEventListener("mousemove", (e) => {
+        el.style.backgroundPositionX = -e.pageY /50 + "px";
+        el.style.backgroundPositionY = -e.pageX /50 + "px";
+        animateMouse(e)
+        animateRei(e)
+        
+      });
   }
 
   var img;
 
-    function handleImage(e){
-        var canvas = document.getElementById('myCanvas');
-        var ctx = canvas.getContext('2d');
-        var reader = new FileReader();
-        reader.onload = function(event){
-            img = new Image();
-            img.onload = function () {
-                const factor = 500; 
-                if(this.height < factor || this.width < factor){
-                    const ratio = this.height/this.width
-                    this.height > this.width ? (myCanvas.height=factor, myCanvas.width= factor*ratio)  : (myCanvas.width=factor, myCanvas.height= factor*ratio)
-                }else{
-                    myCanvas.height=this.height
-                    myCanvas.width=this.width
-                }
-                ctx.drawImage(this, 0, 0, myCanvas.width, myCanvas.height);
-            };
-            img.src = event.target.result;
-        }
-        reader.readAsDataURL(e.target.files[0]);     
+
+function animateRei(e){
+    const rei = document.getElementById('reio');
+    const asuka = document.getElementById('asuka');
+    rei.style.left = 500-e.pageY/25 + 'px';
+    rei.style.top = 650-e.pageX/25 + 'px';
+    asuka.style.left = 350-e.pageY/25 + 'px';
+    asuka.style.top = 150-e.pageX/25 + 'px';
+}
+
+function animateMouse(e){
+    console.log('yesss')
+    const y = mouseTing.style.top = e.clientY-25/2,
+    x = mouseTing.style.left = e.clientX-25/2;
+
+    const keyframes = {
+        transform: `translate(${x}px, ${y}px) `
+      }
+      
+      mouseTing.animate(keyframes, { 
+        duration: 800, 
+        fill: "forwards" 
+      });
+      
+}
+
+function handleImage(e){
+    var canvas = document.getElementById('myCanvas');
+    var ctx = canvas.getContext('2d');
+    var reader = new FileReader();
+    reader.onload = function(event){
+        img = new Image();
+        img.onload = function () {
+            const factor = 25; 
+            if(this.height < factor || this.width < factor){
+                const ratio = this.height/this.width
+                this.height > this.width ? (canvas.height=factor, canvas.width= factor*ratio)  : (canvas.width=factor, canvas.height= factor*ratio)
+            }else{
+                canvas.height=this.height
+                canvas.width=this.width
+            }
+            ctx.drawImage(this, 0, 0, canvas.width, canvas.height);
+        };
+        img.src = event.target.result;
     }
+    reader.readAsDataURL(e.target.files[0]);     
+}
 
 function hide(){
+    const arrow = document.getElementById('arrow').classList;
+    arrow.contains('arrow') ? (arrow.remove('arrow'), arrow.add('arrowleft')) : (arrow.remove('arrowleft'), arrow.add('arrow'))
     const cont = document.getElementById('controlcontainer').classList;
     cont.contains('hidden') ? cont.remove('hidden') : cont.add('hidden')
 }
 
-
- //1.Umwandlung in Graubild
-function Grauwertbild() {
-	function getPixelColor(imgData, x, y) {
+function getPixelColor(imgData, x, y) {
     var i = 4*(x+y*imgData.width);
     r = imgData.data[i+0];
     g = imgData.data[i+1];
@@ -46,7 +82,7 @@ function Grauwertbild() {
 	a = imgData.data[i+3];
     return { r: r, g: g, b: b };
 }
-//2 Umwandlung in ein Schwarz-Weiß-Bild, der Schwellwert ist einstellbar zu halten	
+
 function setPixelColor(imgData, x, y, r, g, b) {
     var i = 4*(x+y*imgData.width);
     imgData.data[i + 0] = r;
@@ -54,6 +90,10 @@ function setPixelColor(imgData, x, y, r, g, b) {
     imgData.data[i + 2] = b;
 	imgData.data[i + 3] = 255;
 }
+
+
+ //1.Umwandlung in Graubild
+function Grauwertbild() {
 	let canvas = document.getElementById("myCanvas");
 	let srcImg = document.getElementById("myCanvas");
 	let ctx = canvas.getContext("2d");
@@ -69,21 +109,6 @@ function setPixelColor(imgData, x, y, r, g, b) {
 
 //2 Umwandlung in ein Schwarz-Weiß-Bild, der Schwellwert ist einstellbar zu halten
 function SWBild(){
-	function getPixelColor(imgData, x, y) {
-    var i = 4*(x+y*imgData.width);
-    r = imgData.data[i+0];
-    g = imgData.data[i+1];
-    b = imgData.data[i+2];
-	a = imgData.data[i+3];
-    return { r: r, g: g, b: b };
-}
-	function setPixelColor(imgData, x, y, r, g, b) {
-    var i = 4*(x+y*imgData.width);
-    imgData.data[i + 0] = r;
-    imgData.data[i + 1] = g;
-    imgData.data[i + 2] = b;
-	imgData.data[i + 3] = 255;
-}
     var schwellwert = document.getElementById('420').value;
     var srcImg = document.getElementById('myCanvas');
     var canvas = document.getElementById('myCanvas');
@@ -101,21 +126,6 @@ function SWBild(){
 
 //3. Aufhellen und Abdunkeln des Bildes in Stufen
 function Helligkeit() {
-	function getPixelColor(imgData, x, y) {
-    var i = 4*(x+y*imgData.width);
-    r = imgData.data[i+0];
-    g = imgData.data[i+1];
-    b = imgData.data[i+2];
-	a = imgData.data[i+3];
-    return { r: r, g: g, b: b };
-}
-	function setPixelColor(imgData, x, y, r, g, b) {
-    var i = 4*(x+y*imgData.width);
-    imgData.data[i + 0] = r;
-    imgData.data[i + 1] = g;
-    imgData.data[i + 2] = b;
-	imgData.data[i + 3] = 255;
-}
 	let faktor = document.getElementById("421").value;
 	let canvas = document.getElementById("myCanvas");
 	let srcImg = document.getElementById("myCanvas");
@@ -130,21 +140,6 @@ function Helligkeit() {
 }
 //4. Kontrast des Bildes um einen einstellbaren Wert erhöhen bzw. erniedrigen
 function Kontrast(){ 
-	function getPixelColor(imgData, x, y) {
-    var i = 4*(x+y*imgData.width);
-    r = imgData.data[i+0];
-    g = imgData.data[i+1];
-    b = imgData.data[i+2];
-	a = imgData.data[i+3];
-    return { r: r, g: g, b: b };
-}
-	function setPixelColor(imgData, x, y, r, g, b) {
-    var i = 4*(x+y*imgData.width);
-    imgData.data[i + 0] = r;
-    imgData.data[i + 1] = g;
-    imgData.data[i + 2] = b;
-	imgData.data[i + 3] = 255;
-}
 	let contrast = document.getElementById("422").value;
 	let canvas = document.getElementById("myCanvas");
 	let srcImg = document.getElementById("myCanvas");
@@ -161,21 +156,6 @@ function Kontrast(){
 }
 //5.Dynamische Veränderung des Rot-, Grün- und Blau-Anteils
 function RGB(){
-	function getPixelColor(imgData, x, y) {
-    var i = 4*(x+y*imgData.width);
-    r = imgData.data[i+0];
-    g = imgData.data[i+1];
-    b = imgData.data[i+2];
-	a = imgData.data[i+3];
-    return { r: r, g: g, b: b };
-}
-	function setPixelColor(imgData, x, y, r, g, b) {
-    var i = 4*(x+y*imgData.width);
-    imgData.data[i + 0] = r;
-    imgData.data[i + 1] = g;
-    imgData.data[i + 2] = b;
-	imgData.data[i + 3] = 255;
-}
     let red = document.getElementById("423").value;
     let green = document.getElementById("424").value;
     let blue = document.getElementById("425").value;
@@ -193,21 +173,6 @@ function RGB(){
 //6. Negativ Erstellung eines Bildes
 //RGB Wert der Pixel von 255 abgezogen um Negativen Wert zu erhalten 
 function Negativ(){
-	function getPixelColor(imgData, x, y) {
-    var i = 4*(x+y*imgData.width);
-    r = imgData.data[i+0];
-    g = imgData.data[i+1];
-    b = imgData.data[i+2];
-	a = imgData.data[i+3];
-    return { r: r, g: g, b: b };
-}
-	function setPixelColor(imgData, x, y, r, g, b) {
-    var i = 4*(x+y*imgData.width);
-    imgData.data[i + 0] = r;
-    imgData.data[i + 1] = g;
-    imgData.data[i + 2] = b;
-	imgData.data[i + 3] = 255;
-}
     let canvas = document.getElementById("myCanvas");
     let srcImg = document.getElementById("myCanvas");
     let ctx = canvas.getContext("2d");
@@ -223,21 +188,6 @@ function Negativ(){
 //7. Rotation um 90° 
 //7.1 im Uhrzeigersinn (3-mal 90°Drehung linksrum)
 function RotationU() {
-	function getPixelColor(imgData, x, y) {
-    var i = 4*(x+y*imgData.width);
-    r = imgData.data[i+0];
-    g = imgData.data[i+1];
-    b = imgData.data[i+2];
-	a = imgData.data[i+3];
-    return { r: r, g: g, b: b };
-}
-	function setPixelColor(imgData, x, y, r, g, b) {
-    var i = 4*(x+y*imgData.width);
-    imgData.data[i + 0] = r;
-    imgData.data[i + 1] = g;
-    imgData.data[i + 2] = b;
-	imgData.data[i + 3] = 255;
-}
 //3-mal nach links drehen ergibt 1-mal nach rechts
 	for(i=0; i<3; i++){
 		var sourceimage = document.getElementById('myCanvas');
@@ -259,21 +209,6 @@ function RotationU() {
 }}
  //7.2 gegen den Uhrzeigersinn
 function RotationGGU() {
-	function getPixelColor(imgData, x, y) {
-    var i = 4*(x+y*imgData.width);
-    r = imgData.data[i+0];
-    g = imgData.data[i+1];
-    b = imgData.data[i+2];
-	a = imgData.data[i+3];
-    return { r: r, g: g, b: b };
-}
-	function setPixelColor(imgData, x, y, r, g, b) {
-    var i = 4*(x+y*imgData.width);
-    imgData.data[i + 0] = r;
-    imgData.data[i + 1] = g;
-    imgData.data[i + 2] = b;
-	imgData.data[i + 3] = 255;
-}
 	var sourceimage = document.getElementById('myCanvas');
 	var canvas = document.getElementById('myCanvas');
 	var ctx = canvas.getContext('2d');
@@ -301,21 +236,6 @@ function RotationGGU() {
     GetPixelColor - Zugriff auf RGBA Werte eines Pixels */
 
 function SpiegelungHor() {
-	function getPixelColor(imgData, x, y) {
-    var i = 4*(x+y*imgData.width);
-    r = imgData.data[i+0];
-    g = imgData.data[i+1];
-    b = imgData.data[i+2];
-	a = imgData.data[i+3];
-    return { r: r, g: g, b: b };
-}
-	function setPixelColor(imgData, x, y, r, g, b) {
-    var i = 4*(x+y*imgData.width);
-    imgData.data[i + 0] = r;
-    imgData.data[i + 1] = g;
-    imgData.data[i + 2] = b;
-	imgData.data[i + 3] = 255;
-}
 	var sourceimage = document.getElementById('myCanvas');
 	var canvas = document.getElementById('myCanvas');
 	var ctx = canvas.getContext('2d');
@@ -335,21 +255,6 @@ function SpiegelungHor() {
 }
 //8.2 vertikale Spiegelung
 function SpiegelungVer() {
-	function getPixelColor(imgData, x, y) {
-    var i = 4*(x+y*imgData.width);
-    r = imgData.data[i+0];
-    g = imgData.data[i+1];
-    b = imgData.data[i+2];
-	a = imgData.data[i+3];
-    return { r: r, g: g, b: b };
-}
-	function setPixelColor(imgData, x, y, r, g, b) {
-    var i = 4*(x+y*imgData.width);
-    imgData.data[i + 0] = r;
-    imgData.data[i + 1] = g;
-    imgData.data[i + 2] = b;
-	imgData.data[i + 3] = 255;
-}
 	var srcImg = document.getElementById('myCanvas');
 	var canvas = document.getElementById('myCanvas');
 	var ctx = canvas.getContext('2d');
@@ -370,23 +275,6 @@ function SpiegelungVer() {
 //9.Skalierung um den Faktor 2 bzw. 0.5
 //9.1 Faktor 2.0
 function SkalierungH(){
-
-	function getPixelColor(imgData, x, y) {
-    var i = 4*(x+y*imgData.width);
-    r = imgData.data[i+0];
-    g = imgData.data[i+1];
-    b = imgData.data[i+2];
-	a = imgData.data[i+3];
-    return { r: r, g: g, b: b };
-}
-
-	function setPixelColor(imgData, x, y, r, g, b) {
-    var i = 4*(x+y*imgData.width);
-    imgData.data[i + 0] = r;
-    imgData.data[i + 1] = g;
-    imgData.data[i + 2] = b;
-	imgData.data[i + 3] = 255;
-}
 	var srcImg = document.getElementById('myCanvas');
 	var canvas = document.getElementById('myCanvas');
 	var w = canvas.width;
@@ -410,21 +298,6 @@ function SkalierungH(){
 }
 //9.2 Faktor 0.5
 function SkalierungR(){
-	function getPixelColor(imgData, x, y) {
-    var i = 4*(x+y*imgData.width);
-    r = imgData.data[i+0];
-    g = imgData.data[i+1];
-    b = imgData.data[i+2];
-	a = imgData.data[i+3];
-    return { r: r, g: g, b: b };
-}
-	function setPixelColor(imgData, x, y, r, g, b) {
-    var i = 4*(x+y*imgData.width);
-    imgData.data[i + 0] = r;
-    imgData.data[i + 1] = g;
-    imgData.data[i + 2] = b;
-	imgData.data[i + 3] = 255;
-}
 	var srcImg = document.getElementById('myCanvas');
 	var canvas = document.getElementById('myCanvas');
 	var w = canvas.width;
@@ -444,21 +317,6 @@ function SkalierungR(){
 }
 //10.Einfacher Rauschfilters
 function Rauschfilter() {
-	function getPixelColor(imgData, x, y) {
-    var i = 4*(x+y*imgData.width);
-    r = imgData.data[i+0];
-    g = imgData.data[i+1];
-    b = imgData.data[i+2];
-	a = imgData.data[i+3];
-    return { r: r, g: g, b: b };
-}
-	function setPixelColor(imgData, x, y, r, g, b) {
-    var i = 4*(x+y*imgData.width);
-    imgData.data[i + 0] = r;
-    imgData.data[i + 1] = g;
-    imgData.data[i + 2] = b;
-	imgData.data[i + 3] = 255;
-}
 	var sourceimage = document.getElementById('myCanvas');
 	var canvas = document.getElementById('myCanvas');
 	var ctx = canvas.getContext('2d');
@@ -495,22 +353,7 @@ function Rauschfilter() {
 //11.Gauß-Filter 
 //11.1 3x3 Filter
 function gaussFilterDreiDrei(){
-	
-	function getPixelColor(imgData, x, y) {
-    var i = 4*(x+y*imgData.width);
-    r = imgData.data[i+0];
-    g = imgData.data[i+1];
-    b = imgData.data[i+2];
-	a = imgData.data[i+3];
-    return { r: r, g: g, b: b };
-}
-	function setPixelColor(imgData, x, y, r, g, b) {
-    var i = 4*(x+y*imgData.width);
-    imgData.data[i + 0] = r;
-    imgData.data[i + 1] = g;
-    imgData.data[i + 2] = b;
-	imgData.data[i + 3] = 255;
-}
+
 	var sourceimage = document.getElementById('myCanvas');
 	var canvas = document.getElementById('myCanvas');
 	var ctx = canvas.getContext('2d');
@@ -546,22 +389,6 @@ function gaussFilterDreiDrei(){
 }
 //11.2 5x5 Filter	
 function gaussFilterFuenfFuenf(){
-	
-	function getPixelColor(imgData, x, y) {
-    var i = 4*(x+y*imgData.width);
-    r = imgData.data[i+0];
-    g = imgData.data[i+1];
-    b = imgData.data[i+2];
-	a = imgData.data[i+3];
-    return { r: r, g: g, b: b };
-}
-	function setPixelColor(imgData, x, y, r, g, b) {
-    var i = 4*(x+y*imgData.width);
-    imgData.data[i + 0] = r;
-    imgData.data[i + 1] = g;
-    imgData.data[i + 2] = b;
-	imgData.data[i + 3] = 255;
-}
 	var sourceimage = document.getElementById('myCanvas');
 	var canvas = document.getElementById('myCanvas');
 	var ctx = canvas.getContext('2d');
@@ -612,22 +439,7 @@ function gaussFilterFuenfFuenf(){
 }
 //12. Kantenerkennung 
 function Kantenerkennung() {
-	
-function setPixelColor(imgData, x, y, r, g, b) {
-    var i = 4*(x+y*imgData.width);
-    imgData.data[i + 0] = r;
-    imgData.data[i + 1] = g;
-    imgData.data[i + 2] = b;
-	imgData.data[i + 3] = 255;
-}
-function getPixelColor(imgData, x, y) {
-    var i = 4*(x+y*imgData.width);
-    r = imgData.data[i+0];
-    g = imgData.data[i+1];
-    b = imgData.data[i+2];
-	a = imgData.data[i+3];
-    return { r: r, g: g, b: b };
-}
+
     let canvas = document.getElementById("myCanvas");
     let srcImg = document.getElementById("myCanvas");
 	let ctx = canvas.getContext("2d");
@@ -661,15 +473,6 @@ function Zuruecksetzen(){
 
 //15. Farbhistogram
 function FarbHistogram(){
-function getPixelColor(imgData, x, y) {
-    var i = 4*(x+y*imgData.width);
-    r = imgData.data[i+0];
-    g = imgData.data[i+1];
-    b = imgData.data[i+2];
-	a = imgData.data[i+3];
-    return { r: r, g: g, b: b };
-	
-}	
 	var srcImg = document.getElementById('myCanvas');
 	var canvas = document.getElementById('myCanvas');
 	var ctx = canvas.getContext('2d');
