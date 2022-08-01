@@ -21,11 +21,29 @@ body{
 #disclaimer{
 	display: none;
 }
+
+#reio{
+	display: block;
+}
+
+#asuka{
+	display: block;
+}
+
 }
 @media only screen and (max-width: 999px){
 #disclaimer{
 	display: flex;
 }
+
+#reio{
+	display: none;
+}
+
+#asuka{
+	display: none;
+}
+
 	
 }
 
@@ -38,6 +56,7 @@ body{
 	background-color: black;
 	color: white;
 	padding-right: 20px;
+
 }
 #root{
 	position: fixed; 
@@ -60,6 +79,7 @@ body{
 	left:200px;
 	z-index: 0;
 	width: 450px;
+	pointer-events: none;
 }
 
 #histoCan{
@@ -73,10 +93,10 @@ body{
 	display: flex;
 	flex-direction: column;
 }
-/*Container*/
+
 #sitecontainer{
 	height: 92vh;
-	width: 92vw;
+	width: 80vw;
 	overflow: hidden;
 	background-image: radial-gradient(
 		rgb(255, 255, 255) 2px, 
@@ -88,6 +108,7 @@ body{
 	margin-top: 20px;
 	margin-left: 100px;
 	background-color: black;
+	position: fixed;
 	padding: 20px;
 	display: flex;
 	flex-direction: row;
@@ -126,7 +147,7 @@ body{
 #controlcontainer{
 	height: fit-content;
 	justify-content: space-between;
-	z-index: 2;
+	z-index: 4;
 	width: 225px;
 	flex-direction: column;
 }
@@ -228,11 +249,13 @@ input[type="file"] {
 }
 
 #globecontainer{
-	padding-right: 75%;
-	z-index: 19;
+	padding-left: 10vw;
+	z-index: 0;
 	position: fixed;
 	height: 1200px;
+	width: 2000px;
 	overflow: show;
+	right: 0;
 }
 
 .name{

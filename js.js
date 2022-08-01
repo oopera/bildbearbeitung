@@ -23,10 +23,13 @@ window.onload=function(){
 function animateRei(e){
     const rei = document.getElementById('reio');
     const asuka = document.getElementById('asuka');
+    const globey = document.getElementById('globecontainer')
     rei.style.left = 500-e.pageY/55 + 'px';
     rei.style.top = 650-e.pageX/15 + 'px';
     asuka.style.left = 350-e.pageY/25 + 'px';
     asuka.style.top = 150-e.pageX/25 + 'px';
+    globey.style.left = 650-e.pageY/63 + 'px';
+    globey.style.top = 350-e.pageX/50 + 'px';
 }
 
 function animateMouse(e){
