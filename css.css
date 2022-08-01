@@ -11,10 +11,19 @@
 
 body{
 	background-color: white;
-	min-height: 100vh;
-	min-width: 100vw;
+	height: 100vh;
+	width: 100vw;
 	overflow: hidden;
 	position: absolute;
+	
+}
+
+#root{
+	position: fixed; 
+	height: 100vh;
+	width: 100vw;
+	margin: 0;
+	overflow: hidden;
 }
 
 #reio{
@@ -66,7 +75,7 @@ body{
 #toggleButton{
 	margin-top: 8px;
 	width: 75px;
-	height: 875px;
+	height: 828px;
 	background-color: black;
 	justify-content: center;
 	display: flex;
