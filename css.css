@@ -107,10 +107,21 @@ body{
 	z-index: 10000;
 	animation: loading 2s cubic-bezier(0.075, 0.82, 0.165, 1) ;
 	margin: 0;
+	font-family: HustleBright, Times, Serif;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 10em;
+	overflow: hidden;
+	color: white;
+	visibility: hidden;
+	pointer-events: none;
+
 }
 
 @keyframes loading{
 	0%{ 
+		visibility: visible;
 		width: 0px;
 		height: 0px;
 		top: 0;
@@ -152,9 +163,12 @@ input[type="file"] {
 }
 
 #myCanvas{
-	margin-left: 50px;
+	margin-left: 500px;
 	pointer-events: none;
+	z-index: 20000;
+	position: absolute;
 }
+
 #loadLabel{
 	border: 1px dotted grey;
     padding: 12px 24px;
@@ -257,7 +271,9 @@ input[type="file"] {
   text-align: center;
   font-size: 16px;
   margin: 4px 2px;
-  float:left;
+  display: flex;
+  flex-direction: row;
+
 }
 
 input{

@@ -23,8 +23,8 @@ window.onload=function(){
 function animateRei(e){
     const rei = document.getElementById('reio');
     const asuka = document.getElementById('asuka');
-    rei.style.left = 500-e.pageY/25 + 'px';
-    rei.style.top = 650-e.pageX/25 + 'px';
+    rei.style.left = 500-e.pageY/55 + 'px';
+    rei.style.top = 650-e.pageX/15 + 'px';
     asuka.style.left = 350-e.pageY/25 + 'px';
     asuka.style.top = 150-e.pageX/25 + 'px';
 }
@@ -80,15 +80,15 @@ function getPixelColor(imgData, x, y) {
     g = imgData.data[i+1];
     b = imgData.data[i+2];
 	a = imgData.data[i+3];
-    return { r: r, g: g, b: b };
+    return { r: r, g: g, b: b, a: a};
 }
 
-function setPixelColor(imgData, x, y, r, g, b) {
+function setPixelColor(imgData, x, y, r, g, b, a) {
     var i = 4*(x+y*imgData.width);
     imgData.data[i + 0] = r;
     imgData.data[i + 1] = g;
     imgData.data[i + 2] = b;
-	imgData.data[i + 3] = 255;
+	imgData.data[i + 3] = a;
 }
 
 
@@ -102,7 +102,7 @@ function Grauwertbild() {
         for (var y = 0; y <= imgData.height; y++) {
 			var Pixel = getPixelColor(imgData, x,y);
 			let lightness = ((Pixel.r + Pixel.g + Pixel.b) / 3);
-			setPixelColor(imgData, x,y, lightness, lightness, lightness);
+			setPixelColor(imgData, x,y, lightness, lightness, lightness, Pixel.a);
   } }
   ctx.putImageData(imgData, 0, 0);
 }
@@ -119,7 +119,7 @@ function SWBild(){
 			var Pixel = getPixelColor(imgData, x,y);
 			let lightness = ((Pixel.r + Pixel.g + Pixel.b) / 3);
 			lightness = lightness < schwellwert ? 0 : 255;
-			setPixelColor(imgData, x,y, lightness, lightness, lightness);
+			setPixelColor(imgData, x,y, lightness, lightness, lightness, Pixel.a);
       }}
     ctx.putImageData(imgData, 0, 0);
 }
@@ -134,7 +134,7 @@ function Helligkeit() {
     for (var x = 0; x < imgData.width; x++) {
         for (var y = 0; y <= imgData.height; y++) {
 			var Pixel = getPixelColor(imgData, x,y);
-			setPixelColor(imgData, x,y, Pixel.r*faktor, Pixel.g*faktor, Pixel.b*faktor);
+			setPixelColor(imgData, x,y, Pixel.r*faktor, Pixel.g*faktor, Pixel.b*faktor, Pixel.a);
 		}}
  	  ctx.putImageData(imgData, 0, 0);
 }
@@ -150,7 +150,7 @@ function Kontrast(){
 	for (var x = 0; x < imgData.width; x++) {
         for (var y = 0; y <= imgData.height; y++) {
 			var Pixel = getPixelColor(imgData, x,y);
-			setPixelColor(imgData, x,y, Pixel.r*contrast + intercept, Pixel.g*contrast + intercept, Pixel.b*contrast + intercept);
+			setPixelColor(imgData, x,y, Pixel.r*contrast + intercept, Pixel.g*contrast + intercept, Pixel.b*contrast + intercept, Pixel.a);
 		}}
  	  ctx.putImageData(imgData, 0, 0);
 }
@@ -166,7 +166,7 @@ function RGB(){
     for (var x = 0; x < imgData.width; x++) {
         for (var y = 0; y <= imgData.height; y++) {
 			var pix = getPixelColor(imgData, x, y);
-			setPixelColor(imgData, x, y, (pix.r*red)+1, (pix.g*green)+1, (pix.b*blue)+1);
+			setPixelColor(imgData, x, y, (pix.r*red)+1, (pix.g*green)+1, (pix.b*blue)+1, pix.a);
     }}
     ctx.putImageData(imgData, 0, 0);
 }
@@ -180,7 +180,7 @@ function Negativ(){
 		for (var x = 0; x < imgData.width; x++) {
         for (var y = 0; y <= imgData.height; y++) {
 			var Pixel = getPixelColor(imgData, x,y);
-			setPixelColor(imgData, x,y, 255-Pixel.r, 255-Pixel.g, 255-Pixel.b);
+			setPixelColor(imgData, x,y, 255-Pixel.r, 255-Pixel.g, 255-Pixel.b, Pixel.a);
       }}
     
     ctx.putImageData(imgData, 0, 0);
@@ -200,7 +200,7 @@ function RotationU() {
     for (var x = 0; x < imgData.width; x++) {
         for (var y = 0; y <= imgData.height; y++) {
             var Pixel = getPixelColor(imgData, x ,y);
-            setPixelColor(newimgData, y, imgData.width - x -1, Pixel.r, Pixel.g, Pixel.b);
+            setPixelColor(newimgData, y, imgData.width - x -1, Pixel.r, Pixel.g, Pixel.b, Pixel.a);
         }
     }
  	canvas.width = newimgData.width;
@@ -219,7 +219,7 @@ function RotationGGU() {
     for (var x = 0; x < imgData.width; x++) {
         for (var y = 0; y <= imgData.height; y++) {
             var Pixel = getPixelColor(imgData, x ,y);
-            setPixelColor(newImgData, y, imgData.width - x -1, Pixel.r, Pixel.g, Pixel.b);
+            setPixelColor(newImgData, y, imgData.width - x -1, Pixel.r, Pixel.g, Pixel.b, Pixel.a);
         }
     }
  	canvas.width = newImgData.width;
@@ -246,8 +246,8 @@ function SpiegelungHor() {
         for (var y = 0; y <= imgData.height; y++) {
             var PixelLinks = getPixelColor(imgData, x, y);
             var PixelRechts = getPixelColor(imgData, imgData.width - x - 1, y);
-            setPixelColor(imgData, x, y, PixelRechts.r, PixelRechts.g, PixelRechts.b);
-            setPixelColor(imgData, imgData.width - x - 1, y, PixelLinks.r, PixelLinks.g, PixelLinks.b);
+            setPixelColor(imgData, x, y, PixelRechts.r, PixelRechts.g, PixelRechts.b, PixelRechts.a);
+            setPixelColor(imgData, imgData.width - x - 1, y, PixelLinks.r, PixelLinks.g, PixelLinks.b, PixelLinks.a);
         }
     }
 
@@ -265,8 +265,8 @@ function SpiegelungVer() {
         for (var y = 0; y <= imgData.height/ 2; y++) {
             var PixelOben = getPixelColor(imgData, x, y);
             var PixelUnten = getPixelColor(imgData, x ,  imgData.height - y - 1);
-            setPixelColor(imgData, x, y, PixelUnten.r, PixelUnten.g, PixelUnten.b);
-            setPixelColor(imgData, x,  imgData.height - y - 1 , PixelOben.r, PixelOben.g, PixelOben.b);
+            setPixelColor(imgData, x, y, PixelUnten.r, PixelUnten.g, PixelUnten.b, PixelUnten.a);
+            setPixelColor(imgData, x,  imgData.height - y - 1 , PixelOben.r, PixelOben.g, PixelOben.b, PixelOben.a);
         }
     }
 
@@ -285,10 +285,10 @@ function SkalierungH(){
     for (var x = 0; x < data.width; x++) {
         for (var y = 0; y <= data.height; y++) {
             var Pixel = getPixelColor(data, x, y);
-            setPixelColor(pix2, x*2, y*2, Pixel.r, Pixel.g, Pixel.b);
-            setPixelColor(pix2, x*2-1, y*2, Pixel.r, Pixel.g, Pixel.b);
-			setPixelColor(pix2, x*2, y*2-1, Pixel.r, Pixel.g, Pixel.b);
-			setPixelColor(pix2, x*2-1, y*2-1, Pixel.r, Pixel.g, Pixel.b);
+            setPixelColor(pix2, x*2, y*2, Pixel.r, Pixel.g, Pixel.b, Pixel.a);
+            setPixelColor(pix2, x*2-1, y*2, Pixel.r, Pixel.g, Pixel.b, Pixel.a);
+			setPixelColor(pix2, x*2, y*2-1, Pixel.r, Pixel.g, Pixel.b, Pixel.a);
+			setPixelColor(pix2, x*2-1, y*2-1, Pixel.r, Pixel.g, Pixel.b, Pixel.a);
 			
         }
     }
@@ -308,7 +308,7 @@ function SkalierungR(){
     for (var x = 0; x < data.width; x++) {
         for (var y = 0; y <= data.height; y++) {
             var Pixel = getPixelColor(data, x*2, y*2);
-            setPixelColor(pix2, x, y, Pixel.r, Pixel.g, Pixel.b);
+            setPixelColor(pix2, x, y, Pixel.r, Pixel.g, Pixel.b, Pixel.a);
         }
     }
  	canvas.width = w/2;
@@ -342,7 +342,7 @@ function Rauschfilter() {
 			var PivelGAvg = (Pixel1.g + Pixel2.g + Pixel3.g + Pixel4.g +Pixel5.g +Pixel6.g +Pixel7.g +Pixel8.g +Pixel9.g)/9;
 			var PivelBAvg = (Pixel1.b + Pixel2.b + Pixel3.b + Pixel4.b +Pixel5.b +Pixel6.b +Pixel7.b +Pixel8.b +Pixel9.b)/9;
 			
-			setPixelColor(newImgData, x, y, PivelRAvg, PivelGAvg, PivelBAvg);
+			setPixelColor(newImgData, x, y, PivelRAvg, PivelGAvg, PivelBAvg, 255);
            
         }
     }
@@ -379,7 +379,7 @@ function gaussFilterDreiDrei(){
 			var PivelGAvg = (Pixel1.g + (Pixel2.g * 2) + Pixel3.g + (Pixel4.g * 2) + (Pixel5.g * 4) + (Pixel6.g * 2) +Pixel7.g + (Pixel8.g * 2) +Pixel9.g)/16;
 			var PivelBAvg = (Pixel1.b + (Pixel2.b * 2) + Pixel3.b + (Pixel4.b * 2) + (Pixel5.b * 4) + (Pixel6.b * 2) +Pixel7.b + (Pixel8.b * 2) +Pixel9.b)/16;
 			
-			setPixelColor(newImgData, x, y, PivelRAvg, PivelGAvg, PivelBAvg);
+			setPixelColor(newImgData, x, y, PivelRAvg, PivelGAvg, PivelBAvg, 255);
            
         }
     }
@@ -429,7 +429,7 @@ function gaussFilterFuenfFuenf(){
 			var PivelRAvg = (Pixel1.r + (Pixel2.r * 4) + (Pixel3.r * 7) + (Pixel4.r * 4) +Pixel5.r +(Pixel6.r *4) + (Pixel7.r*16) +(Pixel8.r*26) +(Pixel9.r*16) + (Pixel10.r*4) + (Pixel11.r*7) + (Pixel12.r*26) + (Pixel13.r * 41) + (Pixel14.r*26) +(Pixel15.r *7) + (Pixel16.r * 4) + (Pixel17.r * 16) +(Pixel18.r * 26) + (Pixel19.r * 16) + (Pixel20.r * 4) + Pixel21.r + (Pixel22.r*4) + (Pixel23.r*7) + (Pixel24.r*4) +Pixel25.r)/273;
 			var PivelGAvg = (Pixel1.g + (Pixel2.g * 4) + (Pixel3.g * 7) + (Pixel4.g * 4) +Pixel5.g +(Pixel6.g *4) + (Pixel7.g*16) +(Pixel8.g*26) +(Pixel9.g*16) + (Pixel10.g*4) + (Pixel11.g*7) + (Pixel12.g*26) + (Pixel13.g * 41) + (Pixel14.g*26) +(Pixel15.g *7) + (Pixel16.g * 4) + (Pixel17.g * 16) +(Pixel18.g * 26) + (Pixel19.g * 16) + (Pixel20.g * 4) + Pixel21.g + (Pixel22.g*4) + (Pixel23.g*7) + (Pixel24.g*4) +Pixel25.g)/273;
 			var PivelBAvg = (Pixel1.b + (Pixel2.b * 4) + (Pixel3.b * 7) + (Pixel4.b * 4) +Pixel5.b +(Pixel6.b *4) + (Pixel7.b*16) +(Pixel8.b*26) +(Pixel9.b*16) + (Pixel10.b*4) + (Pixel11.b*7) + (Pixel12.b*26) + (Pixel13.b * 41) + (Pixel14.b*26) +(Pixel15.b *7) + (Pixel16.b * 4) + (Pixel17.b * 16) +(Pixel18.b * 26) + (Pixel19.b * 16) + (Pixel20.b * 4) + Pixel21.b + (Pixel22.b*4) + (Pixel23.b*7) + (Pixel24.b*4) +Pixel25.b)/273;
-			setPixelColor(newImgData, x, y, PivelRAvg, PivelGAvg, PivelBAvg);
+			setPixelColor(newImgData, x, y, PivelRAvg, PivelGAvg, PivelBAvg, 255);
            
         }
     }
@@ -452,9 +452,9 @@ function Kantenerkennung() {
             var PixelA = getPixelColor(imgData, x, y);
             var PixelB = getPixelColor(imgData, x+1, y);
             if(((PixelA.r+PixelA.b+PixelA.g)/3)-((PixelB.r+PixelB.b+PixelB.g)/3) > 20){
-                setPixelColor(imgData, x, y, 255, 255, 255);
+                setPixelColor(imgData, x, y, 255, 255, 255,PixelA.a);
             } else {
-                setPixelColor(imgData, x, y, 0, 0, 0);
+                setPixelColor(imgData, x, y, 0, 0, 0, PixelA.a);
             }
         }
     }
