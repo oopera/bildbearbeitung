@@ -1,9 +1,11 @@
 // Bild in Canvas laden
 window.onload=function(){
-    const fileBorder = document.getElementById('fileBorder');
-    const loadLabel = document.getElementById('loadLabel');
-    fileBorder.addEventListener('click', handleImage, false);
-    loadLabel.addEventListener('change', handleImage, false);
+    document.getElementById('imageLoader').onchange = function(e) {
+        var img = new Image();
+        img.onload = draw;
+        img.onerror = failed;
+        img.src = URL.createObjectURL(this.files[0]);
+      };
     const el = document.querySelector("#sitecontainer");
     const body = document.querySelector('body')
     initialize();
@@ -20,6 +22,24 @@ window.onload=function(){
   var img;
 
 
+  function draw() {
+    var canvas = document.getElementById('myCanvas');
+    const factor = 900; 
+    if(this.height > factor || this.width > factor){
+        const ratioH = this.height/this.width
+        const ratioW = this.width/this.height
+        this.height > this.width ? (canvas.height=factor, canvas.width= factor*ratioW)  : (canvas.width=factor, canvas.height= factor*ratioH)
+    }else{
+        canvas.height=this.height
+        canvas.width=this.width
+    }
+    var ctx = canvas.getContext('2d');
+    ctx.drawImage(this, 0,0, this.width, this.height, 0,0, canvas.width, canvas.height);
+  }
+  function failed() {
+    console.error("The provided file couldn't be loaded as an Image media");
+  }
+
 function animateRei(e){
     const rei = document.getElementById('reio');
     const asuka = document.getElementById('asuka');
@@ -33,7 +53,6 @@ function animateRei(e){
 }
 
 function animateMouse(e){
-    console.log('yesss')
     const y = mouseTing.style.top = e.clientY-25/2,
     x = mouseTing.style.left = e.clientX-25/2;
 
@@ -48,27 +67,18 @@ function animateMouse(e){
       
 }
 
-function handleImage(e){
-    var canvas = document.getElementById('myCanvas');
-    var ctx = canvas.getContext('2d');
-    var reader = new FileReader();
-    reader.onload = function(event){
-        img = new Image();
-        img.onload = function () {
-            const factor = 25; 
-            if(this.height < factor || this.width < factor){
-                const ratio = this.height/this.width
-                this.height > this.width ? (canvas.height=factor, canvas.width= factor*ratio)  : (canvas.width=factor, canvas.height= factor*ratio)
-            }else{
-                canvas.height=this.height
-                canvas.width=this.width
-            }
-            ctx.drawImage(this, 0, 0, canvas.width, canvas.height);
-        };
-        img.src = event.target.result;
-    }
-    reader.readAsDataURL(e.target.files[0]);     
+
+
+/*  
+const factor = 500; 
+if(this.height < factor || this.width < factor){
+    const ratio = this.width/this.height
+    this.height > this.width ? (canvas.style.height=factor, canvas.style.width= factor*ratio)  : (canvas.style.width=factor, canvas.style.height= factor*ratio)
+}else{
+    canvas.style.height=this.height
+    canvas.style.width=this.width
 }
+*/
 
 function hide(){
     const arrow = document.getElementById('arrow').classList;

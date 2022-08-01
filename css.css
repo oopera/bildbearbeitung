@@ -214,10 +214,10 @@ input[type="file"] {
 }
 
 #myCanvas{
-	margin-left: 500px;
-	pointer-events: none;
 	z-index: 20000;
-	position: absolute;
+	margin-left: 400px;
+	position: fixed;
+
 }
 
 #loadLabel{
