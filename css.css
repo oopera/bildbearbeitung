@@ -68,7 +68,8 @@ body{
 
 #reio{
 	position: absolute;
-	top:200px;
+	top:600px;
+	left: 800px;
 	z-index: 1;
 	width: 350px;
 }
@@ -79,7 +80,7 @@ body{
 	left:200px;
 	z-index: 0;
 	width: 450px;
-	pointer-events: none;
+
 }
 
 #histoCan{
@@ -112,6 +113,7 @@ body{
 	padding: 20px;
 	display: flex;
 	flex-direction: row;
+	border: 1pt black solid;
 }
 
 #toggleButton{
@@ -166,7 +168,6 @@ body{
 	overflow: hidden;
 	color: white;
 	visibility: hidden;
-	pointer-events: none;
 
 }
 
@@ -194,6 +195,29 @@ body{
 
 }
 
+.frame{
+	width: 400px;
+	height: 280px;
+	left: 502px;
+	top: 302px;
+	border: 1pt solid black;
+	border-radius: 25px;
+	background-color: white;
+	position: fixed;
+	padding: 20px;
+}
+.image{
+	width: 400px;
+	height: 220px;
+
+	border-radius: 20px;
+	background-color: white;
+	position: fixed;
+	background-color: black;
+	overflow: hidden;
+
+}
+
 .arrow{
 	border-bottom: white solid 2pt;
 	border-left: white solid 2pt;
@@ -216,7 +240,7 @@ input[type="file"] {
 #myCanvas{
 	z-index: 20000;
 	margin-left: 400px;
-	position: fixed;
+	position: absolute;
 
 }
 
@@ -256,6 +280,7 @@ input[type="file"] {
 	width: 2000px;
 	overflow: show;
 	right: 0;
+	pointer-events: none;
 }
 
 .name{

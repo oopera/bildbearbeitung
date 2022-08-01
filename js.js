@@ -1,13 +1,16 @@
 // Bild in Canvas laden
 window.onload=function(){
     document.getElementById('imageLoader').onchange = function(e) {
-        var img = new Image();
+        img = new Image();
         img.onload = draw;
         img.onerror = failed;
         img.src = URL.createObjectURL(this.files[0]);
       };
     const el = document.querySelector("#sitecontainer");
     const body = document.querySelector('body')
+    dragElement(document.getElementsByClassName('frame')[0]);
+    dragElement(document.getElementById('asuka'));
+    dragElement(document.getElementById('reio'));
     initialize();
 
     body.addEventListener("mousemove", (e) => {
@@ -21,6 +24,48 @@ window.onload=function(){
 
   var img;
 
+
+
+function dragElement(elmnt) {
+  var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+  if (document.getElementById(elmnt.id + "header")) {
+    /* if present, the header is where you move the DIV from:*/
+    document.getElementById(elmnt.id + "header").onmousedown = dragMouseDown;
+  } else {
+    /* otherwise, move the DIV from anywhere inside the DIV:*/
+    elmnt.onmousedown = dragMouseDown;
+  }
+
+  function dragMouseDown(e) {
+    e = e || window.event;
+    e.preventDefault();
+    // get the mouse cursor position at startup:
+    pos3 = e.clientX;
+    pos4 = e.clientY;
+    document.onmouseup = closeDragElement;
+    // call a function whenever the cursor moves:
+    document.onmousemove = elementDrag;
+  }
+
+  function elementDrag(e) {
+    e = e || window.event;
+    e.preventDefault();
+    // calculate the new cursor position:
+    pos1 = pos3 - e.clientX;
+    pos2 = pos4 - e.clientY;
+    pos3 = e.clientX;
+    pos4 = e.clientY;
+    // set the element's new position:
+    elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+    elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+  }
+
+  function closeDragElement() {
+    /* stop moving when mouse button is released:*/
+    document.onmouseup = null;
+    document.onmousemove = null;
+  }
+}
 
   function draw() {
     var canvas = document.getElementById('myCanvas');
@@ -44,12 +89,14 @@ function animateRei(e){
     const rei = document.getElementById('reio');
     const asuka = document.getElementById('asuka');
     const globey = document.getElementById('globecontainer')
-    rei.style.left = 500-e.pageY/55 + 'px';
-    rei.style.top = 650-e.pageX/15 + 'px';
-    asuka.style.left = 350-e.pageY/25 + 'px';
-    asuka.style.top = 150-e.pageX/25 + 'px';
+    const frame = document.getElementsByClassName('frame')[0]
+
+    rei.style.transform = "translate(" + e.pageX/15 + 'px,' + e.pageY/55 + 'px)'
+    asuka.style.transform = "translate(" + e.pageY/63 + 'px,' + e.pageX/50 + 'px)'
     globey.style.left = 650-e.pageY/63 + 'px';
     globey.style.top = 350-e.pageX/50 + 'px';
+    frame.style.transform = "translate(" +e.pageX/100 + 'px,' + e.pageY/100 + 'px)'
+
 }
 
 function animateMouse(e){
