@@ -72,6 +72,7 @@ body{
 	left: 800px;
 	z-index: 1;
 	width: 350px;
+	cursor: grabbing;
 }
 
 #asuka{
@@ -80,7 +81,7 @@ body{
 	left:200px;
 	z-index: 0;
 	width: 450px;
-
+	cursor: grabbing;
 }
 
 #histoCan{
@@ -205,6 +206,7 @@ body{
 	background-color: white;
 	position: fixed;
 	padding: 20px;
+	cursor:move;
 }
 .image{
 	width: 400px;
