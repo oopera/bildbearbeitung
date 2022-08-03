@@ -15,6 +15,7 @@ body{
 	width: 100vw;
 	overflow: hidden;
 	position: absolute;
+	cursor: none;
 	
 }
 @media only screen and (min-width: 999px){
@@ -282,6 +283,8 @@ input[type="file"] {
 	width: 2000px;
 	overflow: show;
 	right: 0;
+	left: 650px;
+	top: 350px;
 	pointer-events: none;
 }
 
@@ -313,6 +316,9 @@ input[type="file"] {
 	padding: 8px 4px;
 	margin: 4px 2px;
 	
+}
+button{
+	cursor: none;
 }
 
 .hidden{
